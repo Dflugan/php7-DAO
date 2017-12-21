@@ -57,6 +57,39 @@ Class Usuario
       $this->setDtcadastro(new dateTime($row['dtcadastro']));
     }
   }
+
+  public static function getList()
+  {
+    $sql = new Sql();
+    return $sql->select("SELECT * FROM tb_usuarios ORDER BY idusuario");
+  }
+
+  public static function search($login)
+  {
+    $sql = new Sql();
+    return $sql->select("SELECT * FROM tb_usuarios WHERE deslogin LIKE :SEARCH ORDER BY deslogin", array(
+      ":SEARCH"=>"%".$login."%"
+    ));
+  }
+
+  public function login($login, $password)
+  {
+    $sql = new Sql();
+    $result = $sql->select("SELECT * FROM tb_usuarios WHERE deslogin = :LOGIN AND dessenha = :PASSWORD",array(
+      ":LOGIN"=> $login,
+      ":PASSWORD"=> $password
+    ));
+    if (isset($result[0])) {
+      $row = $result[0];
+      $this->setIdUsuario($row['idusuario']);
+      $this->setDeslogin($row['deslogin']);
+      $this->setDessenha($row['dessenha']);
+      $this->setDtcadastro(new dateTime($row['dtcadastro']));
+    }else {
+      throw new \Exception("Login e/ou senha esão errados.");
+    }
+  }
+
   public function __toString()
   {
     return json_encode(array(
