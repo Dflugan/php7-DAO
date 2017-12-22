@@ -30,5 +30,7 @@ require_once("config.php");
 // echo $user;
 
 $user = new Usuario();
-$user->delete(12);
+$user->loadById(11);
+$user->delete();
+echo $user;
  ?>

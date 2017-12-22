@@ -116,14 +116,19 @@ Class Usuario
     ));
   }
 
-  public function delete($id)
+  public function delete()
   {
     $sql = new Sql;
     $result = $sql->query("DELETE FROM tb_usuarios WHERE idusuario = :ID", array(
-      ":ID"=>$id
+      ":ID"=>$this->getIdUsuario()
     ));
     if ($result) {
-      echo "Delete com sucesso";
+      $this->setIdUsuario(0);
+      $this->setDeslogin("");
+      $this->setDessenha("");
+      $this->setDtcadastro(new datetime());
+    }else {
+      throw new \Exception("Error ao deletar");
     }
   }
 
