@@ -13,10 +13,16 @@ require_once("config.php");
 // $search = Usuario::search("a");
 // echo json_encode($search);
 
-$user = new Usuario;
-$user->login("Gabriela","142536");
+//CARREGAR UM USUARIO USANDO LOGIN E SENHA
+// $user = new Usuario;
+// $user->login("Gabriela","142536");
+// echo $user;
 
+$user = new Usuario('Dflugann2018', '123456');
+$user->insert();
 echo $user;
+
+
 
 
  ?>
